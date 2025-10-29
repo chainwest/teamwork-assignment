@@ -115,7 +115,9 @@ func (ci CustomerImporter) ImportDomainData() ([]DomainData, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer file.Close()
+	defer func() {
+		_ = file.Close()
+	}()
 	csvReader := csv.NewReader(file)
 	data := make(map[string]uint64)
 
@@ -151,7 +153,7 @@ func (ci CustomerImporter) ImportDomainData() ([]DomainData, error) {
 			return nil, fmt.Errorf("invalid email in CSV: %w", err)
 		}
 
-		data[domain] += 1
+		data[domain]++
 	}
 
 	slog.Info("aggregation complete", "total_rows", rowCount, "unique_domains", len(data))

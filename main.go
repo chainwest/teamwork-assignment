@@ -42,6 +42,7 @@ import (
 	"log/slog"
 )
 
+// Options holds command-line flags for the application
 type Options struct {
 	path    *string
 	outFile *string

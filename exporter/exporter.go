@@ -66,7 +66,9 @@ func (ex CustomerExporter) ExportData(data []customerimporter.DomainData) error 
 	if err != nil {
 		return fmt.Errorf("failed to create output file: %w", err)
 	}
-	defer outputFile.Close()
+	defer func() {
+		_ = outputFile.Close()
+	}()
 
 	if err := exportCsv(data, outputFile); err != nil {
 		return err

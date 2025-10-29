@@ -228,5 +228,5 @@ func BenchmarkImportDomainData(b *testing.B) {
 
 // writeTestCSV is a helper function to write test CSV content to a file
 func writeTestCSV(path, content string) error {
-	return os.WriteFile(path, []byte(content), 0644)
+	return os.WriteFile(path, []byte(content), 0600)
 }

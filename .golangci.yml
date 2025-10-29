@@ -1,75 +1,56 @@
-# golangci-lint configuration
+# golangci-lint configuration for version 2.x
 # See https://golangci-lint.run/usage/configuration/ for full options
 
-run:
-  # Timeout for analysis
-  timeout: 5m
+version: 2
 
-  # Which dirs to skip: issues from them won't be reported
+run:
+  timeout: 5m
   skip-dirs:
     - vendor
-
-  # Tests should also be linted
   tests: true
 
 output:
-  # Colored output
   formats:
-    - format: colored-line-number
-
-  # Print lines of code with issue
+    colored-line-number: stdout
   print-issued-lines: true
-
-  # Print linter name in the end of issue text
   print-linter-name: true
 
 linters:
   enable:
-    # Default linters
-    - errcheck      # Check for unchecked errors
-    - gosimple      # Simplify code
-    - govet         # Vet examines Go source code
-    - ineffassign   # Detect ineffectual assignments
-    - staticcheck   # Static analysis
-    - unused        # Check for unused constants, variables, functions and types
+    - errcheck
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    - misspell
+    - goconst
+    - gocyclo
+    - gosec
+    - unconvert
+    - dupl
+    - gocritic
+    - revive
+    - nolintlint
+    - bodyclose
+    - rowserrcheck
+    - whitespace
+    - goprintffuncname
 
-    # Additional recommended linters
-    - gofmt         # Check whether code was gofmt-ed
-    - goimports     # Check import statements are formatted
-    - misspell      # Find commonly misspelled English words
-    - goconst       # Find repeated strings that could be constants
-    - gocyclo       # Compute cyclomatic complexity
-    - gosec         # Inspect source code for security problems
-    - unconvert     # Remove unnecessary type conversions
-    - dupl          # Code clone detection
-    - gocritic      # Comprehensive Go source code linter
-    - revive        # Fast, configurable, extensible, flexible linter
-    - exportloopref # Check for pointers to enclosing loop variables
-    - nolintlint    # Ensure nolint directives are properly used
-    - bodyclose     # Check HTTP response bodies are closed
-    - rowserrcheck  # Check if sql.Rows.Err is checked
-    - stylecheck    # Replacement for golint
-    - whitespace    # Check for unnecessary whitespace
-    - goprintffuncname # Check printf-like function names
+formatters:
+  enable:
+    - gofmt
+    - goimports
 
 linters-settings:
   gocyclo:
-    # Minimal code complexity to report
     min-complexity: 15
-
   goconst:
-    # Minimal length of string constant
     min-len: 3
-    # Minimum occurrences to report
     min-occurrences: 3
-
   dupl:
-    # Threshold for duplicate code detection
     threshold: 100
-
   misspell:
     locale: US
-
   gocritic:
     enabled-tags:
       - diagnostic
@@ -77,7 +58,6 @@ linters-settings:
       - style
     disabled-checks:
       - commentedOutCode
-
   revive:
     rules:
       - name: exported
@@ -91,15 +71,9 @@ linters-settings:
       - name: indent-error-flow
 
 issues:
-  # Maximum issues count per one linter
   max-issues-per-linter: 0
-
-  # Maximum count of issues with the same text
   max-same-issues: 0
-
-  # Exclude some linters from running on tests files
   exclude-rules:
-    # Exclude some linters from running on test files
     - path: _test\.go
       linters:
         - gocyclo
